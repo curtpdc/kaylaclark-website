@@ -227,16 +227,33 @@ html {
 
 @keyframes float {
     0%, 100% {
-        transform: translateY(0) rotate(var(--rotation, 0deg));
+        transform: translateY(0);
     }
     50% {
-        transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 2deg));
+        transform: translateY(-20px);
     }
 }
 
-.collage-1 { --rotation: -5deg; }
-.collage-2 { --rotation: 8deg; }
-.collage-3 { --rotation: -3deg; }
+@keyframes floatCentered {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) rotate(-3deg);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-20px) rotate(-1deg);
+    }
+}
+
+.collage-1 {
+    animation-name: float;
+}
+
+.collage-2 {
+    animation-name: float;
+}
+
+.collage-3 {
+    animation-name: floatCentered;
+}
 
 .hero-content {
     text-align: center;
@@ -940,9 +957,15 @@ html {
 /* Hero with Image Overlay */
 .hero-with-image {
     position: relative;
-    background-attachment: fixed !important;
     background-position: center !important;
     background-size: cover !important;
+}
+
+/* Parallax effect only on larger screens for better performance */
+@media (min-width: 1024px) {
+    .hero-with-image {
+        background-attachment: fixed !important;
+    }
 }
 
 .hero-with-image .hero-content {
