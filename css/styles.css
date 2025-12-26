@@ -157,9 +157,86 @@ html {
     align-items: center;
     justify-content: center;
     position: relative;
-    background: linear-gradient(135deg, var(--secondary-color) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, rgba(248, 248, 248, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%), url('../images/hero-bg.jpg') center/cover no-repeat;
     overflow: hidden;
 }
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+/* Creative Hero Image Collage */
+.hero-image-collage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.15;
+}
+
+.collage-item {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: float 20s ease-in-out infinite;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%);
+}
+
+.collage-1 {
+    width: 300px;
+    height: 400px;
+    top: 10%;
+    left: 5%;
+    transform: rotate(-5deg);
+    animation-delay: 0s;
+}
+
+.collage-2 {
+    width: 250px;
+    height: 350px;
+    top: 50%;
+    right: 8%;
+    transform: rotate(8deg);
+    animation-delay: 5s;
+}
+
+.collage-3 {
+    width: 280px;
+    height: 380px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    animation-delay: 10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(var(--rotation, 0deg));
+    }
+    50% {
+        transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 2deg));
+    }
+}
+
+.collage-1 { --rotation: -5deg; }
+.collage-2 { --rotation: 8deg; }
+.collage-3 { --rotation: -3deg; }
 
 .hero-content {
     text-align: center;
@@ -269,12 +346,50 @@ html {
     background: var(--accent-color);
 }
 
-/* Featured Work Grid */
+/* Featured Work Grid - Creative Masonry Layout */
 .work-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
+}
+
+/* Creative Mosaic Layout Alternative */
+.work-grid.mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 200px;
+    gap: 1rem;
+}
+
+.work-grid.mosaic .work-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.work-grid.mosaic .work-item:nth-child(2) {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.work-grid.mosaic .work-item:nth-child(3) {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.work-grid.mosaic .work-item:nth-child(4) {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+.work-grid.mosaic .work-item:nth-child(5) {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+.work-grid.mosaic .work-item:nth-child(6) {
+    grid-column: span 2;
+    grid-row: span 2;
 }
 
 .work-item {
@@ -361,6 +476,84 @@ html {
 
 .about-image:hover img {
     transform: scale(1.05);
+}
+
+/* Decorative Frame for About Image */
+.image-frame {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 3px solid var(--accent-color);
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.about-image:hover .image-frame {
+    opacity: 0.5;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+}
+
+/* Photo Gallery Section */
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item.gallery-large {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+}
+
+.gallery-item.gallery-wide {
+    grid-column: span 2;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+    filter: brightness(0.95);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+    filter: brightness(1);
+}
+
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2) 100%);
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
 }
 
 /* Creative Direction Preview */
@@ -743,3 +936,52 @@ html {
 
 .hidden { display: none; }
 .visible { display: block; }
+
+/* Hero with Image Overlay */
+.hero-with-image {
+    position: relative;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.hero-with-image .hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Responsive adjustments for photo gallery */
+@media (max-width: 768px) {
+    .photo-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-item.gallery-large,
+    .gallery-item.gallery-wide {
+        grid-column: span 1;
+    }
+    
+    .hero-image-collage {
+        opacity: 0.1;
+    }
+    
+    .collage-item {
+        width: 200px !important;
+        height: 280px !important;
+    }
+    
+    .collage-1 {
+        top: 5%;
+        left: 2%;
+    }
+    
+    .collage-2 {
+        top: 40%;
+        right: 2%;
+    }
+    
+    .collage-3 {
+        bottom: 5%;
+        left: 50%;
+    }
+}
